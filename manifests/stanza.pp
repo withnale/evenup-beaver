@@ -48,7 +48,7 @@ define beaver::stanza (
   $type,
   $source                 = undef,
   $tags                   = undef,
-  $add_field              = [],
+  $add_field              = undef,
   $redis_url              = undef,
   $redis_namespace        = undef,
   $sincedb_write_interval = undef,
