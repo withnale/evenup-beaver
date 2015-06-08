@@ -71,7 +71,7 @@ class beaver::package (
     mode    => '0555',
     owner   => 'root',
     group   => 'root',
-    content => template('beaver/beaver.init.erb'),
+    content => template("beaver/${$beaver::params::init_file}"),
   }
 
   file { '/etc/beaver':
@@ -79,6 +79,7 @@ class beaver::package (
     mode   => '0555',
     owner  => 'root',
     group  => 'root',
+
   }
 
   file { '/etc/beaver/conf.d':

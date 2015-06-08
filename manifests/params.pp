@@ -26,4 +26,20 @@ class beaver::params {
   $sincedb_path           = '/tmp/beaver_since.db'
   $multiline_regex_after  = undef
   $multiline_regex_before = undef
+
+   # packages
+  case $::operatingsystem {
+    'RedHat', 'CentOS', 'Fedora', 'Scientific', 'Amazon', 'OracleLinux', 'SLES', 'OpenSuSE': {
+      # main application
+      $init_file = 'beaver.init.erb'
+    }
+    'Debian', 'Ubuntu': {
+      # main application
+      $init_file = 'beaver.init-debian.erb'
+    }
+    default: {
+      fail("\"${module_name}\" provides no package default value
+            for \"${::operatingsystem}\"")
+    }
+  }
 }
