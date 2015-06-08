@@ -1,5 +1,6 @@
 # Managed by puppet - do not modify
 [beaver]
+transport = redis
 redis_url = <%= scope.lookupvar('beaver::redis_url') %>
 redis_namespace: <%= scope.lookupvar('beaver::redis_namespace') %>
 queue_timeout: <%= scope.lookupvar('beaver::queue_timeout') %>

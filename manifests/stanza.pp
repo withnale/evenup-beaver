@@ -47,13 +47,13 @@
 define beaver::stanza (
   $type,
   $source                 = undef,
-  $tags                   = [],
+  $tags                   = undef,
   $add_field              = [],
+  $redis_url              = undef,
+  $redis_namespace        = undef,
+  $sincedb_write_interval = undef,
   $exclude                = '',
-  $redis_url              = '',
-  $redis_namespace        = '',
   $format                 = '',
-  $sincedb_write_interval = 300,
 ){
 
   if $source {
@@ -63,7 +63,6 @@ define beaver::stanza (
   }
 
   validate_string($type, $source_real)
-  if ! is_integer($sincedb_write_interval) { fail('sincedb_write_interval is not an integer') }
 
   include ::beaver
   Class['beaver::package'] ->

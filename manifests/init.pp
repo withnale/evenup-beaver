@@ -104,10 +104,7 @@ class beaver (
 ) inherits beaver::params {
 
   validate_bool($enable, $enable_sincedb)
-  if $logstash_version > 1 {
-    fail("logstash_version must be 0 or 1, got ${logstash_version}")
-  }
-  validate_string($redis_host, $redis_namespace)
+  #validate_string($redis_url, $redis_namespace)
 
   class { '::beaver::package': } ->
   class { '::beaver::config': } ~>

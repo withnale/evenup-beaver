@@ -29,7 +29,9 @@ exclude: <%= scope.lookupvar('exclude') %>
 format: <%= scope.lookupvar('format') %>
 <% end -%>
 <% if scope.lookupvar('beaver::enable_sincedb') -%>
+<% if @sincedb_write_interval -%>
 sincedb_write_interval: <%= scope.lookupvar('sincedb_write_interval') %>
+<% end -%>
 <% end -%>
 <% unless @exclude.empty? -%>
 <% if @exclude.is_a?(Array) -%>
