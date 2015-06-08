@@ -41,17 +41,9 @@
 #   String.  What version of beaver to install
 #   Default: installed
 #
-# [*redis_host*]
+# [*redis_url*]
 #   String.  Default redis to send logs to
-#   Default: localhost
-#
-# [*redis_db*]
-#   Integer.  Default redis db to write logs to
-#   Default: 0
-#
-# [*redis_port*]
-#   Integer.  Default port to use for the redis connection
-#   Default: 6379
+#   Default: redis://localhost:6379/0
 #
 # [*redis_namespace*]
 #   String.  Default namespace beaver should write logs to
@@ -67,13 +59,17 @@
 #
 # [*sincedb_path*]
 #   String.  Location for sincedb sqlite3 database.  Beaver needs rw to this location
-#   Default: /tmp/beaver
+#   Default: /tmp/beaver.sqlite3
 #
 # [*multiline_regex_after*]
 #   String.   If a line match this regular expression, it will be merged with next line(s)
 #
 # [*multiline_regex_before*]
 #   String.   If a line match this regular expression, it will be merged with previous line(s).
+#
+# [*queue_timeout*]
+#   Integer or String.  Seconds before timeout.
+#   Default: 60
 #
 # === Examples
 #
@@ -95,20 +91,21 @@ class beaver (
   $user                   = $beaver::params::user,
   $group                  = $beaver::params::group,
   $version                = $beaver::params::version,
-  $redis_host             = $beaver::params::redis_host,
-  $redis_db               = $beaver::params::redis_db,
-  $redis_port             = $beaver::params::redis_port,
+  $redis_url              = $beaver::params::redis_url,
   $redis_namespace        = $beaver::params::redis_namespace,
   $queue_timeout          = $beaver::params::queue_timeout,
   $enable_sincedb         = $beaver::params::enable_sincedb,
   $sincedb_path           = $beaver::params::sincedb_path,
   $multiline_regex_after  = $beaver::params::multiline_regex_after,
   $multiline_regex_before = $beaver::params::multiline_regex_before,
+  $queue_timeout          = $beaver::params::queue_timeout,
+  $discover_interval      = $beaver::params::discover_interval,
 ) inherits beaver::params {
 
   validate_bool($enable, $enable_sincedb)
-  if ! is_integer($redis_db) { fail('redis_db is not an integer') }
-  if ! is_integer($redis_port) { fail('redis_port is not an integer') }
+  if $logstash_version > 1 {
+    fail("logstash_version must be 0 or 1, got ${logstash_version}")
+  }
   validate_string($redis_host, $redis_namespace)
 
   class { '::beaver::package': } ->
