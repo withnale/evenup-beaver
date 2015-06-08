@@ -19,7 +19,7 @@ class beaver::config (
 
   create_resources('beaver::stanza', $beaver::stanzas)
 
-  file { '/etc/beaver.conf':
+  file { '/etc/beaver/beaver.conf':
     ensure  => 'file',
     owner   => 'root',
     group   => 'root',
